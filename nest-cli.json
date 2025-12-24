@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/RESCUE/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/RESCUE/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/RESCUE",
+  "projects": {
+     
+    "api-gateway": {
+      "type": "application",
+      "root": "apps/api-gateway",
+      "entryFile": "main",
+      "sourceRoot": "apps/api-gateway/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/api-gateway/tsconfig.app.json"
+      }
+    },
+    "dispatch": {
+      "type": "application",
+      "root": "apps/dispatch",
+      "entryFile": "main",
+      "sourceRoot": "apps/dispatch/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/dispatch/tsconfig.app.json"
+      }
+    },
+    "locator": {
+      "type": "application",
+      "root": "apps/locator",
+      "entryFile": "main",
+      "sourceRoot": "apps/locator/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/locator/tsconfig.app.json"
+      }
+    },
+    "media": {
+      "type": "application",
+      "root": "apps/media",
+      "entryFile": "main",
+      "sourceRoot": "apps/media/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/media/tsconfig.app.json"
+      }
+    }
+  }
+}
