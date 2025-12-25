@@ -27,6 +27,8 @@
     "@nestjs/core": "^11.0.1",
     "@nestjs/microservices": "^11.1.10",
     "@nestjs/platform-express": "^11.0.1",
+    "cloudinary": "^2.8.0",
+    "redis": "^5.10.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },
@@ -72,7 +74,11 @@
     "coverageDirectory": "./coverage",
     "testEnvironment": "node",
     "roots": [
-      "<rootDir>/apps/"
-    ]
+      "<rootDir>/apps/",
+      "<rootDir>/libs/"
+    ],
+    "moduleNameMapper": {
+      "^@app/common(|/.*)$": "<rootDir>/libs/common/src/$1"
+    }
   }
 }

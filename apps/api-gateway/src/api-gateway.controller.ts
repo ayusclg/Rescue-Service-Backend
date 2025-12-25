@@ -1,12 +1,15 @@
-import { Controller, Get } from '@nestjs/common';
-import { ApiGatewayService } from './api-gateway.service';
+import { Body, Controller, HttpException, Inject, Post } from '@nestjs/common';
 
-@Controller()
+import { ClientProxy } from '@nestjs/microservices';
+ 
+@Controller('file')
 export class ApiGatewayController {
-  constructor(private readonly apiGatewayService: ApiGatewayService) {}
+  constructor(@Inject('media_Service') private readonly client: ClientProxy) {}
 
-  @Get()
-  getHello(): string {
-    return this.apiGatewayService.getHello();
+  @Post('upload')
+  upload(@Body('filePath') filePath: string): string {
+    console.log(filePath);
+    this.client.send({ cmd: 'upload_audio' }, filePath);
+    throw new HttpException('file uploaded', 200);
   }
 }

@@ -22,7 +22,7 @@ export default tsEslint.config(
   ...tsEslint.configs.recommendedTypeChecked,
 
   // Prettier integration
-  prettierRecommended,
+  // prettierRecommended,
 
   {
     // Language options and global variables
