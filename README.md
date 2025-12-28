@@ -18,9 +18,9 @@
 RESCUE is a **NestJS microservices application** consisting of multiple services:
 
 - **API Gateway** (`api-gateway`)  
-- **Dispatch Service** (`dispatch`)  
+- **rider Service** (`rider`)  
 - **Locator Service** (`locator`)  
-- **Media Service** (`media`)  
+- **user Service** (`user`)  
 
 This project leverages NestJS's modular architecture and microservices capabilities to provide a scalable server-side system.
 
