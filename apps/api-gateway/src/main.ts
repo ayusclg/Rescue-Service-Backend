@@ -1,9 +1,11 @@
 import { NestFactory } from '@nestjs/core';
-import { ApiGatewayModule } from './api-gateway.module';
+import { AppModule } from './app.module';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
-  const app = await NestFactory.create(ApiGatewayModule);
-  await app.listen(process.env.port ?? 3000);
+  const app = await NestFactory.create(AppModule);
+  const config = app.get(ConfigService);
+  await app.listen(config.get<number>('PORT') || 3000);
 }
 bootstrap().catch((err) => {
   console.log('Error In Api Gateway', err);

@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { DispatchModule } from './../src/dispatch.module';
+import { DispatchModule } from '../src/dispatch.module';
 
 describe('DispatchController (e2e)', () => {
   let app: INestApplication;
