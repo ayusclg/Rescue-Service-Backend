@@ -1,4 +1,12 @@
-import { RiderCreateDto, RiderResponseDto } from '@app/common';
+import {
+  loginRiderDto,
+  RiderCreateDto,
+  riderLocationDto,
+  riderLocationFetchDto,
+  riderLocationResponseDto,
+  RiderloginResponseDto,
+  RiderResponseDto
+} from '@app/common';
 import {
   Body,
   Controller,
@@ -6,16 +14,19 @@ import {
   HttpException,
   HttpStatus,
   Inject,
-  Post
+  Post,
+  Query,
+  Res
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import type { Response } from 'express';
 
 @Controller('rider')
 export class RiderController {
   constructor(
     @Inject('rider_service') private readonly riderClient: ClientProxy
   ) {}
-  @Get('/')
+  @Get('/hit')
   random(): string {
     return `this is rider controller in api-gateway`;
   }
@@ -32,5 +43,59 @@ export class RiderController {
       );
     }
     return response;
+  }
+
+  @Post('/login')
+  async loginRider(
+    @Body() payload: loginRiderDto,
+    @Res({ passthrough: true }) res: Response
+  ) {
+    const login = await this.riderClient
+      .send<RiderloginResponseDto, loginRiderDto>('login-rider', payload)
+      .toPromise();
+    if (!login) {
+      throw new HttpException(
+        'CouldNot Fetch Logged In User',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+    res.cookie('accessToken', login.accessToken, {
+      httpOnly: false,
+      secure: false
+    });
+    return login;
+  }
+
+  @Post('/location')
+  storeLiveLocation(@Body() payload: riderLocationDto) {
+    const response = this.riderClient.emit(
+      'rider-live-location-store',
+      payload
+    );
+    if (!response) {
+      throw new HttpException(
+        'Storing Location Of Rider Failed',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  @Get('/location')
+  async getRiderLocation(
+    @Query() payload: riderLocationFetchDto
+  ): Promise<riderLocationResponseDto> {
+    const rider = await this.riderClient
+      .send<
+        riderLocationResponseDto,
+        riderLocationFetchDto
+      >('rider-live-location', payload)
+      .toPromise();
+    if (!rider) {
+      throw new HttpException(
+        'Fetching Rider Location Failed',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+    return rider;
   }
 }

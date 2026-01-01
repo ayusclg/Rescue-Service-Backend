@@ -32,6 +32,9 @@ export class Rider {
     vechileDocuments: string[];
   };
 
+  @Column({ nullable: false, type: Number })
+  pin: number;
+
   @Column({ default: false })
   isVerified: boolean;
 
