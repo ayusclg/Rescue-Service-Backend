@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { RiderModule } from './rider.module';
 import { DatabaseModule } from './db.module';
+import { SocketModule } from '@app/common/socket/socket.module';
 
 @Module({
   imports: [
